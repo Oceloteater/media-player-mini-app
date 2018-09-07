@@ -1,11 +1,11 @@
 {
-  "name": "MERN-boilerplate",
+  "name": "media-player-mini-app",
   "version": "1.0.0",
-  "description": "MERN stack project boilerplate",
-  "author": "Eugene Cheung",
+  "description": "MERN stack application for Simfy",
+  "author": "Adam Carroll",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arkon/MERN-boilerplate.git"
+    "url": "git+https://github.com/Oceloteater/media-player-mini-app.git"
   },
   "license": "MIT",
   "private": true,
@@ -23,6 +23,7 @@
     "autoprefixer": "^8.2.0",
     "axios": "^0.18.0",
     "babel-loader": "^8.0.0-beta.2",
+    "bcrypt": "^3.0.0",
     "connect-history-api-fallback": "^1.5.0",
     "copy-webpack-plugin": "^4.5.1",
     "css-loader": "^0.28.11",
