@@ -4,7 +4,7 @@ const UserSession = require("../../models/UserSession");
 module.exports = (router) => {
 
   // SIGN UP POST request [http://localhost:8080/api/signup]
-  router.post("/api/signup", (req, res) => {
+  router.post("/api/account/signup", (req, res) => {
 
     const user = new User();
     user.username = req.body.username;
@@ -17,15 +17,15 @@ module.exports = (router) => {
       || req.body.password == null || req.body.password == ""
       || req.body.email == null || req.body.email == "")
     {
-      //res.send("Validation Error: Please ensure that all fields have been provided");
+      console.log("Validation Error: Please ensure that all fields have been provided");
       res.json({ success: false, message: "Validation Error: Please ensure that all fields have been provided" });
     } else {
       user.save((error) => {
         if (error) {
-          console.log("HIT ERROR statement" + error);
+          console.log("The system returned the following error:" + error);
           res.json({ success: false, message: "The system returned the following error: " + error});
         } else {
-          console.log("HIT USER CREATED statement");
+          console.log("User: "+ user +" successfully created");
           res.json({ success: true, message: "User: "+ user +" successfully created" });
         }
       });
@@ -33,16 +33,16 @@ module.exports = (router) => {
   });
 
   // LOGIN POST request [http://localhost:8080/api/login]
-  router.post("/api/login", (req, res) => {
+  router.post("/api/account/login", (req, res) => {
 
     console.log("Attempting to login user : " + req.body.username);
 
     if (req.body.username == null || req.body.username == "") {
-      //res.send("Validation Error: Username cannot be blank");
+      console.log("Validation Error: Username cannot be blank");
       res.json({ success: false, message: "Validation Error: Username cannot be blank" });
     }
     if (req.body.password == null || req.body.password == "") {
-      //res.send("Validation Error: Password cannot be blank");
+      console.log("Validation Error: Password cannot be blank");
       res.json({ success: false, message: "Validation Error: Password cannot be blank" });
     }
 
@@ -50,33 +50,27 @@ module.exports = (router) => {
       username: req.body.username
     }, (error, users) => {
       if (error) {
-        //res.send("Cannot found user");
+        console.log("Cannot find user : " + error);
         res.json({ success: false, message: "Cannot find user" + error});
       }
-      console.log("Users length: " + users.length);
-      console.log("Returned users: " + users);
       if (users.length != 1) {
-        //res.send("Duplicate user");
+        console.log("Duplicate user" + users);
         res.json({ success: false, message: "Duplicate user : " + users});
       }
-
       const user = users[0];
+
       //if (!user.validPassword(req.body.password)) {
       if (user.password != req.body.password) {
-
-        console.log("PASSWORD IN BODY : " + req.body.password);
-        console.log("PASSWORD IN MONGO : " + user.password);
-
-        //res.send("Password invalid");
-        res.json({ success: false, message: "Password invalid" });
+        console.log("Invalid password");
+        res.json({ success: false, message: "Invalid password" });
       } else {
         const userSession = new UserSession();
 
         userSession.userId = user._id;
         userSession.save((error, doc) => {
           if (error) {
-            res.send("Cannot save user");
-            res.json({ success: false, message: "Cannot save user" + error});
+            res.send("Cannot save user : " + error);
+            res.json({ success: false, message: "Cannot save user : " + error});
           } else {
             return res.send({
               success: true,
@@ -91,7 +85,7 @@ module.exports = (router) => {
   });
 
   // VERIFY GET request [http://localhost:8080/api/verify]
-  router.get("/api/verify", (req, res) => {
+  router.get("/api/account/verify", (req, res) => {
 
     const token = req.query.token;
 
@@ -100,24 +94,22 @@ module.exports = (router) => {
       isDeleted: false
     }, (error, sessions) => {
       if (error) {
-        //res.send("Cannot find user");
+        console.log("Cannot find user : " + error);
         res.json({success: false, message: "Cannot find session : " + error});
       }
-      console.log("Users length: " + sessions.length);
-      console.log("Returned users: " + sessions);
       if (sessions.length != 1) {
-        //res.send("Duplicate session");
+        console.log("Duplicate session : " + sessions);
         res.json({ success: false, message: "Duplicate session : " + sessions});
       } else {
-        //res.send("Duplicate user");
+        console.log("User session validated : " + sessions);
         res.json({ success: true, message: "User session validated : " + sessions});
       }
     });
 
   });
 
-  // LOGOUT GET request [http://localhost:8080/api/verify]
-  router.get("/api/logout", (req, res) => {
+  // LOGOUT GET request [http://localhost:8080/api/logout]
+  router.get("/api/account/logout", (req, res) => {
 
     const token = req.query.token;
 
@@ -128,15 +120,15 @@ module.exports = (router) => {
       $set: { isDeleted: true }
     }, null, (error, sessions) => {
       if (error) {
-        //res.send("Cannot find user");
+        console.log("Cannot find user");
         res.json({success: false, message: "Cannot find session : " + error});
       }
-      console.log("Returned users: " + sessions);
+
       if (!sessions) {
-        //res.send("Duplicate session");
+        console.log("Duplicate session");
         res.json({ success: false, message: "Duplicate session cannot logout : " + sessions});
       } else {
-        //res.send("Duplicate user");
+        console.log("User successfully logged out : " + sessions);
         res.json({ success: true, message: "User successfully logged out : " + sessions});
       }
     });
