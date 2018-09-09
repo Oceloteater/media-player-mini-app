@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
-import { getFromStorage, setFromStorage } from '../../utils/storage';
+import { getFromStorage, setInStorage } from '../../utils/storage';
 import LoginForm from '../account/LoginForm';
 import SignUpForm from '../account/SignUpForm';
 
@@ -27,13 +27,13 @@ class Home extends Component {
     this.updateLoginState = this.updateLoginState.bind(this);
     this.onSignUp = this.onSignUp.bind(this);
     this.onLogin = this.onLogin.bind(this);
-
+    this.onLogout = this.onLogout.bind(this);
   }
 
   componentDidMount() {
-    console.log(this.state);
-    const token = getFromStorage("test string");
-    if (token) {
+    const storage = getFromStorage("simfy_login");
+    if (storage && storage.token) {
+      const { token } = storage;
       // verify
       fetch('/api/account/verify?token=' + token)
         .then(res => res.json())
@@ -131,9 +131,11 @@ class Home extends Component {
         let login = this.state.login;
         login.error = json.message;
         if (json.success) {
+          setInStorage("simfy_login", { token: json.token});
           this.setState({
             login: login,
-            isLoading: false
+            isLoading: false,
+            token: json.token
           });
           console.log("SUCCESS");
         } else {
@@ -146,24 +148,41 @@ class Home extends Component {
       });
   }
 
-
-  // GET
-  // fetch('/api/counters')
-  //   .then(res => res.json())
-  //   .then(json => {
-  //     this.setState({
-  //       counters: json
-  //     });
-  //   });
-
+  onLogout() {
+    this.setState({
+      isLoading: true
+    });
+    const storage = getFromStorage("simfy_login");
+    if (storage && storage.token) {
+      const { token } = storage;
+      // verify
+      fetch('/api/account/logout?token=' + token)
+        .then(res => res.json())
+        .then(json => {
+          if (json.success) {
+            this.setState({
+              token: "",
+              isLoading: false
+            });
+          } else {
+            this.setState({
+              isLoading: false
+            });
+          }
+        });
+    } else {
+      // not logged in
+      this.setState({
+        isLoading: false
+      })
+    }
+  }
 
   render() {
     const { token, isLoading, login } = this.state;
-
     if (isLoading) {
       return <div><p>Loading...</p></div>
     }
-
     if (!token) {
       return (
         <div>
@@ -185,7 +204,8 @@ class Home extends Component {
     }
     return (
       <div>
-        <p>Account</p>
+        <p>Account - Logged in</p>
+        <button className="btn btn-primary" type="button" onClick={this.onLogout}>Logout</button>
       </div>
     );
   }
