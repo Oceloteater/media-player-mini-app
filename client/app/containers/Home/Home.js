@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import 'whatwg-fetch';
 import { getFromStorage, setFromStorage } from '../../utils/storage';
 import Form from '../account/Form';
+import LoginForm from '../account/LoginForm';
+import RegisterForm from '../account/RegisterForm';
 
 class Home extends Component {
   constructor(props) {
@@ -9,9 +11,14 @@ class Home extends Component {
 
     this.state = {
       isLoading: true,
+      token: "",
       signUpError: "",
-      LoginError: "",
-      token: ""
+      signUpUsername: "",
+      signUpPassword: "",
+      signUpEmail: "",
+      loginError: "",
+      loginUsername: "",
+      loginPassword: ""
     };
   }
 
@@ -64,16 +71,16 @@ class Home extends Component {
 
 
   render() {
-    const { token, isLoading } = this.state;
+    const { token, isLoading, loginPassword, loginUsername, loginError  } = this.state;
+
     if (isLoading) {
       return <div><p>Loading...</p></div>
     }
+
     if (!token) {
       return (
         <div>
-          <p>Sign Up</p>
-          <p>Sign In</p>
-          <Form/>
+          <LoginForm/>
         </div>
       );
     }
