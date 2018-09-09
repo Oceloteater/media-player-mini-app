@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
-
 import { getFromStorage, setFromStorage } from '../../utils/storage';
+import Form from '../account/Form';
 
 class Home extends Component {
   constructor(props) {
@@ -73,6 +73,7 @@ class Home extends Component {
         <div>
           <p>Sign Up</p>
           <p>Sign In</p>
+          <Form/>
         </div>
       );
     }
