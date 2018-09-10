@@ -3,6 +3,7 @@ import 'whatwg-fetch';
 import { getFromStorage, setInStorage } from '../../utils/storage';
 import LoginForm from '../account/LoginForm';
 import SignUpForm from '../account/SignUpForm';
+import Header from '../common/Header';
 
 class Home extends Component {
   constructor(props) {
@@ -102,13 +103,13 @@ class Home extends Component {
             signUp: signUp,
             isLoading: false
           });
-          console.log("SUCCESS");
+          console.log("SIGN UP SUCCESS");
         } else {
           this.setState({
             signUp: signUp,
             isLoading: false
           });
-          console.log("FAILURE");
+          console.log("SIGN UP FAILURE");
         }
       });
   }
@@ -135,20 +136,20 @@ class Home extends Component {
         login.error = json.message;
         if (json.success) {
           setInStorage("simfy_login", { token: json.token});
-          login.username = "";
-          login.password = "";
+          // login.username = "";
+          // login.password = "";
           this.setState({
             login: login,
             isLoading: false,
             token: json.token
           });
-          console.log("SUCCESS");
+          console.log("LOGIN SUCCESS");
         } else {
           this.setState({
             login: login,
             isLoading: false
           });
-          console.log("FAILURE");
+          console.log("LOGIN FAILURE");
         }
       });
   }
@@ -192,6 +193,8 @@ class Home extends Component {
     }
     if (!token) {
       return (
+        <div>
+        <Header/>
         <div className="row">
           <div className="col-md-6">
             <LoginForm
@@ -211,10 +214,14 @@ class Home extends Component {
             ) : (null)
           }
         </div>
+        </div>
       );
     }
     return (
       <div>
+        <Header
+          username={this.state.login.username}/>
+
         <p>Account - Logged in</p>
         <button className="btn btn-primary" type="button" onClick={this.onLogout}>Logout</button>
       </div>
