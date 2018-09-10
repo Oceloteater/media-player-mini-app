@@ -4,8 +4,9 @@ import { getFromStorage, setInStorage } from '../../utils/storage';
 import LoginForm from '../account/LoginForm';
 import SignUpForm from '../account/SignUpForm';
 import Header from '../common/Header';
+import HomePage from "./HomePage";
 
-class Home extends Component {
+class LandingPage extends Component {
   constructor(props) {
     super(props);
 
@@ -29,6 +30,8 @@ class Home extends Component {
     this.onSignUp = this.onSignUp.bind(this);
     this.onLogin = this.onLogin.bind(this);
     this.onLogout = this.onLogout.bind(this);
+
+    //this.navbarLoginVerification = this.navbarLoginVerification.bind(this);
   }
 
   componentDidMount() {
@@ -74,7 +77,7 @@ class Home extends Component {
     return this.setState({login: login});
   }
 
-  onSignUp(event) {
+  onSignUp() {
     const { username, password, email } = this.state.signUp;
 
     this.setState({
@@ -114,7 +117,7 @@ class Home extends Component {
       });
   }
 
-  onLogin(event) {
+  onLogin() {
     const { username, password } = this.state.login;
 
     this.setState({
@@ -161,7 +164,7 @@ class Home extends Component {
     const storage = getFromStorage("simfy_login");
     if (storage && storage.token) {
       const { token } = storage;
-      // verify
+      // logout
       fetch('/api/account/logout?token=' + token)
         .then(res => res.json())
         .then(json => {
@@ -185,6 +188,33 @@ class Home extends Component {
       })
     }
   }
+
+  // navbarLoginVerification() {
+  //   const storage = getFromStorage("simfy_login");
+  //   if (storage && storage.token) {
+  //     const { token } = storage;
+  //     // verify
+  //     fetch('/api/account/verify?token=' + token)
+  //       .then(res => res.json())
+  //       .then(json => {
+  //         if (json.success) {
+  //           this.setState({
+  //             token,
+  //             isLoading: false
+  //           });
+  //         } else {
+  //           this.setState({
+  //             isLoading: false
+  //           });
+  //         }
+  //       });
+  //   } else {
+  //     // not logged in
+  //     this.setState({
+  //       isLoading: false
+  //     })
+  //   }
+  // }
 
   render() {
     const { token, isLoading, login } = this.state;
@@ -224,9 +254,10 @@ class Home extends Component {
 
         <p>Account - Logged in</p>
         <button className="btn btn-primary" type="button" onClick={this.onLogout}>Logout</button>
+        <HomePage/>
       </div>
     );
   }
 }
 
-export default Home;
+export default LandingPage;

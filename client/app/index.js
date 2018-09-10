@@ -16,7 +16,7 @@ import store from './store';
 // Containers
 import App from './containers/App/App';
 import NotFound from './containers/App/NotFound';
-import Home from './containers/Home/Home';
+import LandingPage from './containers/Home/LandingPage';
 import HelloWorld from './containers/HelloWorld/HelloWorld';
 import Counters from './containers/Counters/Counters';
 
@@ -30,7 +30,7 @@ render((
     <Router>
       <App>
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={LandingPage} />
           <Route path="/counters" component={Counters} />
           <Route path="/helloworld" component={HelloWorld} />
           <Route component={NotFound}/>

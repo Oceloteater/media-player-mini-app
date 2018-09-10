@@ -1,3 +1,26 @@
+# media-player-mini-app
+
+Notes:
+
+Write common api call to get username from token for navbar and category list header
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # MERN-boilerplate
 
     [POST] http://localhost:8080/api/login
