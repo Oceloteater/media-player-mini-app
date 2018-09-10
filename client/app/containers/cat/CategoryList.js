@@ -4,7 +4,7 @@
 import React, {PropTypes} from 'react';
 import CategoryListRow from './CategoryListRow';
 
-const CategoryList = ({categories, cats}) => {
+const CategoryList = ({cats}) => {
   return (
     <table className="table">
       <thead>
@@ -15,12 +15,9 @@ const CategoryList = ({categories, cats}) => {
       </tr>
       </thead>
       <tbody>
-      {/*{categories.map(category =>*/}
-        {/*<CategoryListRow key={category.title} category={category}/>*/}
-      {/*)}*/}
-      {cats.map(cat =>
-        <CategoryListRow key={cat.id} cat={cat}/>
-      )}
+        {cats.map(cat =>
+          <CategoryListRow key={cat.id} cat={cat}/>
+        )}
       </tbody>
     </table>
   );
