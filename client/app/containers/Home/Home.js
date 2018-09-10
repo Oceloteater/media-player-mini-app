@@ -95,6 +95,9 @@ class Home extends Component {
         let signUp = this.state.signUp;
         signUp.error = json.message;
         if (json.success) {
+          signUp.username = "";
+          signUp.password = "";
+          signUp.email = "";
           this.setState({
             signUp: signUp,
             isLoading: false
@@ -132,6 +135,8 @@ class Home extends Component {
         login.error = json.message;
         if (json.success) {
           setInStorage("simfy_login", { token: json.token});
+          login.username = "";
+          login.password = "";
           this.setState({
             login: login,
             isLoading: false,
@@ -160,6 +165,8 @@ class Home extends Component {
         .then(res => res.json())
         .then(json => {
           if (json.success) {
+            let login = this.state.login;
+            login.error = "";
             this.setState({
               token: "",
               isLoading: false
@@ -185,15 +192,19 @@ class Home extends Component {
     }
     if (!token) {
       return (
-        <div>
-          <LoginForm
-            login={this.state.login}
-            onChange={this.updateLoginState}
-            onLogin={this.onLogin}/>
-          <SignUpForm
-            signUp={this.state.signUp}
-            onChange={this.updateSignUpState}
-            onSignUp={this.onSignUp}/>
+        <div className="row">
+          <div className="col-md-6">
+            <LoginForm
+              login={this.state.login}
+              onChange={this.updateLoginState}
+              onLogin={this.onLogin}/>
+          </div>
+          <div className="col-md-6">
+            <SignUpForm
+              signUp={this.state.signUp}
+              onChange={this.updateSignUpState}
+              onSignUp={this.onSignUp}/>
+          </div>
           {
             (login.error) ? (
               <p>{login.error}</p>

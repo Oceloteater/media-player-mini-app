@@ -4,7 +4,7 @@ const SignUpForm = ({signUp, onChange, onSignUp}) => {
     return (
         <div className="form-group">
             <form className="form-signin">
-                <h1>Sign up to register</h1>
+                <h3>Sign up to register</h3>
                 <input
                     name="username"
                     className="form-control"
