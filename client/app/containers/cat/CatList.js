@@ -2,9 +2,9 @@
  * Created by n0256343 on 3/21/2017.
  */
 import React, {PropTypes} from 'react';
-import CategoryListRow from './CategoryListRow';
+import CategoryListRow from './CatListRow';
 
-const CategoryList = ({cats}) => {
+const CatList = ({cats}) => {
   return (
     <table className="table">
       <thead>
@@ -23,4 +23,4 @@ const CategoryList = ({cats}) => {
   );
 };
 
-export default CategoryList;
+export default CatList;

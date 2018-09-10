@@ -19,6 +19,7 @@ import NotFound from './containers/App/NotFound';
 import LandingPage from './containers/Home/LandingPage';
 import HelloWorld from './containers/HelloWorld/HelloWorld';
 import Counters from './containers/Counters/Counters';
+import CatInfo from './containers/cat/CatInfo';
 
 // Styles
 import './styles/styles.scss';
@@ -33,6 +34,8 @@ render((
           <Route exact path="/" component={LandingPage} />
           <Route path="/counters" component={Counters} />
           <Route path="/helloworld" component={HelloWorld} />
+          <Route path="/catinfo" component={CatInfo}/>
+          <Route path="/catinfo/:id" component={CatInfo}/>
           <Route component={NotFound}/>
         </Switch>
       </App>

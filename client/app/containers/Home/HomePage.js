@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
-import CategoryList from '../cat/CategoryList';
+import CatList from '../cat/CatList';
 
 class HomePage extends Component {
 
@@ -67,7 +67,7 @@ class HomePage extends Component {
     return(
       <div>
         <h1>List of fantastic cats</h1>
-        <CategoryList
+        <CatList
           cats={this.state.cats}/>
       </div>
     );

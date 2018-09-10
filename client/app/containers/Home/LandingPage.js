@@ -35,7 +35,7 @@ class LandingPage extends Component {
   }
 
   componentDidMount() {
-    const storage = getFromStorage("simfy_login");
+    const storage = getFromStorage("catify_login");
     if (storage && storage.token) {
       const { token } = storage;
       // verify
@@ -138,7 +138,7 @@ class LandingPage extends Component {
         let login = this.state.login;
         login.error = json.message;
         if (json.success) {
-          setInStorage("simfy_login", { token: json.token});
+          setInStorage("catify_login", { token: json.token});
           // login.username = "";
           // login.password = "";
           this.setState({
@@ -161,7 +161,7 @@ class LandingPage extends Component {
     this.setState({
       isLoading: true
     });
-    const storage = getFromStorage("simfy_login");
+    const storage = getFromStorage("catify_login");
     if (storage && storage.token) {
       const { token } = storage;
       // logout
@@ -193,7 +193,7 @@ class LandingPage extends Component {
 
   // need this for nav bar name and catalog menu
 
-  //   const storage = getFromStorage("simfy_login");
+  //   const storage = getFromStorage("catify_login");
   //   if (storage && storage.token) {
   //     const { token } = storage;
   //     // verify
