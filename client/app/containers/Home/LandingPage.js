@@ -189,7 +189,10 @@ class LandingPage extends Component {
     }
   }
 
-  // navbarLoginVerification() {
+  // getUsernameFromToken() {
+
+  // need this for nav bar name and catalog menu
+
   //   const storage = getFromStorage("simfy_login");
   //   if (storage && storage.token) {
   //     const { token } = storage;

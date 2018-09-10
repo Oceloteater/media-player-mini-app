@@ -4,7 +4,7 @@ Notes:
 
 Write common api call to get username from token for navbar and category list header
 
-
+Skipped a lot of nav bar functionality in the interests of building out more components
 
 
 
