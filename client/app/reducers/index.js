@@ -3,7 +3,7 @@
  * object to your store.
  */
 import { combineReducers } from 'redux';
-import { getCounters, selectedCounter } from './CountersReducer';
+import { getCounters, selectedCounter } from './ExampleReducer';
 
 // I want to refer to counters as "counters" so that's why
 // it's spelled this way. Adding another reducer? Add it below

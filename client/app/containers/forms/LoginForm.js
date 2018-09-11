@@ -1,6 +1,6 @@
 import React from 'react';
 
- const LoginForm = ({login, onChange, onLogin}) => {
+const LoginForm = ({login, onChange, onLogin}) => {
    return (
        <div className="form-group">
          <form className="form-signin">

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
 import { getFromStorage, setInStorage } from '../../utils/storage';
-import LoginForm from '../account/LoginForm';
-import SignUpForm from '../account/SignUpForm';
+import LoginForm from '../forms/LoginForm';
+import SignUpForm from '../forms/SignUpForm';
 import Header from '../common/Header';
 import HomePage from "./HomePage";
 
@@ -251,7 +251,7 @@ class LandingPage extends Component {
         <Header username={this.state.login.username}/>
         <p>Account - Logged in</p>
         <button className="btn btn-primary" type="button" onClick={this.onLogout}>Logout</button>
-        <h1>Welcome {this.state.login.username}<br/>Here's a list of fantastic cats</h1>
+        <h1>Welcome {this.state.login.username}<br/>Here's your fantastic list of cats</h1>
         <HomePage username={this.state.login.username}/>
       </div>
     );

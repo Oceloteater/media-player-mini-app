@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
-import CatList from '../cat/CatList';
+import CatList from '../components/CatList';
 
 class HomePage extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this.state = {
-      cats: [],
-      username: props.username
+      cats: []
     };
 
     this.createCatList = this.createCatList.bind(this);
@@ -17,7 +16,6 @@ class HomePage extends Component {
 
   componentDidMount() {
     this.getCats();
-
   }
 
   getCats() {

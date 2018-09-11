@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Header = ({username}) => {
-  console.log("THIS IS THE LOGIN INFO: "+username);
   return (
     <nav className="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
       <a className="navbar-brand" href="#">Catify</a>
@@ -22,12 +21,9 @@ const Header = ({username}) => {
             <a className="nav-link disabled" href="#">Disabled</a>
           </li>
           <li className="nav-item dropdown">
-            <a className="nav-link dropdown-toggle" href="https://example.com" id="dropdown01" data-toggle="dropdown"
+            <a className="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false" defaultValue="Account">{username}</a>
             <div className="dropdown-menu" aria-labelledby="dropdown01">
-              <a className="dropdown-item" href="#">Action</a>
-              <a className="dropdown-item" href="#">Another action</a>
-              <a className="dropdown-item" href="#">Something else here</a>
             </div>
           </li>
         </ul>
