@@ -97,16 +97,41 @@ module.exports = (router) => {
         console.log("Cannot find user : " + error);
         res.json({success: false, message: "Cannot find session : " + error});
       }
-      if (sessions.length != 1) {
+      if (sessions.length != 1 || sessions.length == 0) {
         console.log("Duplicate session : " + sessions);
         res.json({ success: false, message: "Duplicate session : " + sessions});
       } else {
         console.log("User session validated : " + sessions);
-        res.json({ success: true, message: "User session validated : " + sessions});
+        res.json({ success: true, message: sessions[0]});
       }
     });
 
   });
+
+  //GET USER GET request [http://localhost:8080/api/getUser]
+  router.get("/api/account/getUser", (req, res) => {
+
+    const userId = req.query.userId;
+
+      User.find({
+        _id: userId
+      }, (error, users) => {
+        if (error) {
+          console.log("Cannot find user : " + error);
+          res.json({success: false, message: "Cannot find user : " + error});
+        }
+        if (users.length != 1 || users.length == 0) {
+          console.log("Cannot find user : " + users);
+          res.json({ success: false, message: "Cannot find user : " + users});
+        } else {
+          console.log("User found : " + users);
+          res.json({ success: true, message: users[0]});
+        }
+      });
+  });
+
+
+
 
   // LOGOUT GET request [http://localhost:8080/api/logout]
   router.get("/api/account/logout", (req, res) => {

@@ -31,10 +31,11 @@ class LandingPage extends Component {
     this.onLogin = this.onLogin.bind(this);
     this.onLogout = this.onLogout.bind(this);
 
-    //this.navbarLoginVerification = this.navbarLoginVerification.bind(this);
+    this.getUsernameFromToken = this.getUsernameFromToken.bind(this);
   }
 
   componentDidMount() {
+    let userId = "";
     const storage = getFromStorage("catify_login");
     if (storage && storage.token) {
       const { token } = storage;
@@ -43,6 +44,7 @@ class LandingPage extends Component {
         .then(res => res.json())
         .then(json => {
           if (json.success) {
+            userId = json.message.userId;
             this.setState({
               token,
               isLoading: false
@@ -52,13 +54,17 @@ class LandingPage extends Component {
               isLoading: false
             });
           }
-        });
+        })
+        .then(() =>
+          this.getUsernameFromToken(userId)
+        );
     } else {
       // not logged in
       this.setState({
         isLoading: false
       })
     }
+
   }
 
   updateSignUpState(event) {
@@ -189,35 +195,25 @@ class LandingPage extends Component {
     }
   }
 
-  // getUsernameFromToken() {
+  getUsernameFromToken(userId) {
+    fetch('/api/account/getUser?userId=' + userId)
+      .then(res => res.json())
+      .then(json => {
+        if (json.success) {
+          let login = this.state.login;
+          login.username = json.message.username;
+          this.setState({
+            login: login,
+            isLoading: false
+          });
+        } else {
+          this.setState({
+            isLoading: false
+          });
+        }
+     });
+  }
 
-  // need this for nav bar name and catalog menu
-
-  //   const storage = getFromStorage("catify_login");
-  //   if (storage && storage.token) {
-  //     const { token } = storage;
-  //     // verify
-  //     fetch('/api/account/verify?token=' + token)
-  //       .then(res => res.json())
-  //       .then(json => {
-  //         if (json.success) {
-  //           this.setState({
-  //             token,
-  //             isLoading: false
-  //           });
-  //         } else {
-  //           this.setState({
-  //             isLoading: false
-  //           });
-  //         }
-  //       });
-  //   } else {
-  //     // not logged in
-  //     this.setState({
-  //       isLoading: false
-  //     })
-  //   }
-  // }
 
   render() {
     const { token, isLoading, login } = this.state;
@@ -252,12 +248,11 @@ class LandingPage extends Component {
     }
     return (
       <div>
-        <Header
-          username={this.state.login.username}/>
-
+        <Header username={this.state.login.username}/>
         <p>Account - Logged in</p>
         <button className="btn btn-primary" type="button" onClick={this.onLogout}>Logout</button>
-        <HomePage/>
+        <h1>Welcome {this.state.login.username}<br/>Here's a list of fantastic cats</h1>
+        <HomePage username={this.state.login.username}/>
       </div>
     );
   }

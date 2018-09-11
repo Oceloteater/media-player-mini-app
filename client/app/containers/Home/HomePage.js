@@ -7,7 +7,8 @@ class HomePage extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      cats: []
+      cats: [],
+      username: props.username
     };
 
     this.createCatList = this.createCatList.bind(this);
@@ -16,6 +17,7 @@ class HomePage extends Component {
 
   componentDidMount() {
     this.getCats();
+
   }
 
   getCats() {
@@ -66,7 +68,6 @@ class HomePage extends Component {
   render() {
     return(
       <div>
-        <h1>List of fantastic cats</h1>
         <CatList
           cats={this.state.cats}/>
       </div>
