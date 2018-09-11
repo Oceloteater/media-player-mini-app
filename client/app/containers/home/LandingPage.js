@@ -55,16 +55,15 @@ class LandingPage extends Component {
             });
           }
         })
-        .then(() =>
-          this.getUsernameFromToken(userId)
-        );
+        .then(() => {
+            this.getUsernameFromToken(userId);
+        });
     } else {
       // not logged in
       this.setState({
         isLoading: false
       })
     }
-
   }
 
   updateSignUpState(event) {
@@ -105,14 +104,16 @@ class LandingPage extends Component {
         let signUp = this.state.signUp;
         signUp.error = json.message;
         if (json.success) {
-          signUp.username = "";
-          signUp.password = "";
+          // signUp.username = "";
+          // signUp.password = "";
           signUp.email = "";
           this.setState({
             signUp: signUp,
             isLoading: false
           });
           console.log("SIGN UP SUCCESS");
+          // log user on
+          this.onLogin();
         } else {
           this.setState({
             signUp: signUp,
@@ -124,12 +125,20 @@ class LandingPage extends Component {
   }
 
   onLogin() {
-    const { username, password } = this.state.login;
+    let username, password;
+    const { signUp, login } = this.state;
 
+    if (signUp.username != null && signUp.username != ""
+      && signUp.password != null && signUp.password != "") {
+      username = signUp.username;
+      password = signUp.password;
+    } else {
+      username =  login.username;
+      password = login.password;
+    }
     this.setState({
       isLoading: true
     });
-
     fetch('/api/account/login', {
       method: 'POST',
       headers: {
@@ -159,6 +168,25 @@ class LandingPage extends Component {
             isLoading: false
           });
           console.log("LOGIN FAILURE");
+        }
+      });
+  }
+
+  getUsernameFromToken(userId) {
+    fetch('/api/account/getUser?userId=' + userId)
+      .then(res => res.json())
+      .then(json => {
+        if (json.success) {
+          let login = this.state.login;
+          login.username = json.message.username;
+          this.setState({
+            login: login,
+            isLoading: false
+          });
+        } else {
+          this.setState({
+            isLoading: false
+          });
         }
       });
   }
@@ -193,25 +221,6 @@ class LandingPage extends Component {
         isLoading: false
       })
     }
-  }
-
-  getUsernameFromToken(userId) {
-    fetch('/api/account/getUser?userId=' + userId)
-      .then(res => res.json())
-      .then(json => {
-        if (json.success) {
-          let login = this.state.login;
-          login.username = json.message.username;
-          this.setState({
-            login: login,
-            isLoading: false
-          });
-        } else {
-          this.setState({
-            isLoading: false
-          });
-        }
-     });
   }
 
 

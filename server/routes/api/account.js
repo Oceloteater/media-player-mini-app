@@ -23,10 +23,10 @@ module.exports = (router) => {
       user.save((error) => {
         if (error) {
           console.log("The system returned the following error:" + error);
-          res.json({ success: false, message: "The system returned the following error: " + error});
+          return res.json({ success: false, message: "The system returned the following error: " + error});
         } else {
           console.log("User: "+ user +" successfully created");
-          res.json({ success: true, message: "User: "+ user +" successfully created" });
+          return res.json({ success: true, message: "User: "+ user +" successfully created" });
         }
       });
     }
@@ -129,9 +129,6 @@ module.exports = (router) => {
         }
       });
   });
-
-
-
 
   // LOGOUT GET request [http://localhost:8080/api/logout]
   router.get("/api/account/logout", (req, res) => {
