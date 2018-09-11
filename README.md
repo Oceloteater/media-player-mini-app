@@ -55,6 +55,11 @@ Not implemented:
 
 Stretch goal and not enough time. Admin and support functionality not deemed necessary for first iteration / POC of this app.
 
+### Known issues:
+- First time sign up / login the username is not displayed in nav bar or central component, but upon refresh checks the store and populates
+- Form information persisting when navigating back (had to allow this for auto login to work initially)
+- CSS styling issues with mid col-6 divs when screen is resized 
+
 ## MERN-boilerplate
 
 This is MERN application which uses the following technologies:
