@@ -25,3 +25,6 @@ $RECYCLE.BIN/
 
 # IDE stuff
 .idea
+
+# DB stuff
+data
