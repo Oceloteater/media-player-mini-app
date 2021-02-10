@@ -13,9 +13,9 @@ module.exports = (router) => {
 
     console.log("Creating user : "+user);
 
-    if (req.body.username == null || req.body.username == ""
-      || req.body.password == null || req.body.password == ""
-      || req.body.email == null || req.body.email == "")
+    if (req.body.username == null || req.body.username === ""
+      || req.body.password == null || req.body.password === ""
+      || req.body.email == null || req.body.email === "")
     {
       console.log("Validation Error: Please ensure that all fields have been provided");
       res.json({ success: false, message: "Validation Error: Please ensure that all fields have been provided" });
@@ -37,11 +37,11 @@ module.exports = (router) => {
 
     console.log("Attempting to login user : " + req.body.username);
 
-    if (req.body.username == null || req.body.username == "") {
+    if (req.body.username == null || req.body.username === "") {
       console.log("Validation Error: Username cannot be blank");
       res.json({ success: false, message: "Validation Error: Username cannot be blank" });
     }
-    if (req.body.password == null || req.body.password == "") {
+    if (req.body.password == null || req.body.password === "") {
       console.log("Validation Error: Password cannot be blank");
       res.json({ success: false, message: "Validation Error: Password cannot be blank" });
     }
@@ -53,14 +53,14 @@ module.exports = (router) => {
         console.log("Cannot find user : " + error);
         res.json({ success: false, message: "Cannot find user" + error});
       }
-      if (users.length != 1) {
+      if (users.length !== 1) {
         console.log("Duplicate user" + users);
         res.json({ success: false, message: "Duplicate user : " + users});
       }
       const user = users[0];
 
       //if (!user.validPassword(req.body.password)) {
-      if (user.password != req.body.password) {
+      if (user.password !== req.body.password) {
         console.log("Invalid password");
         res.json({ success: false, message: "Invalid password" });
       } else {
@@ -97,7 +97,7 @@ module.exports = (router) => {
         console.log("Cannot find user : " + error);
         res.json({success: false, message: "Cannot find session : " + error});
       }
-      if (sessions.length != 1 || sessions.length == 0) {
+      if (sessions.length !== 1 || sessions.length === 0) {
         console.log("Duplicate session : " + sessions);
         res.json({ success: false, message: "Duplicate session : " + sessions});
       } else {
@@ -120,7 +120,7 @@ module.exports = (router) => {
           console.log("Cannot find user : " + error);
           res.json({success: false, message: "Cannot find user : " + error});
         }
-        if (users.length != 1 || users.length == 0) {
+        if (users.length !== 1 || users.length === 0) {
           console.log("Cannot find user : " + users);
           res.json({ success: false, message: "Cannot find user : " + users});
         } else {
