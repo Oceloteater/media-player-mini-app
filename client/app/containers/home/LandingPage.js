@@ -104,8 +104,6 @@ class LandingPage extends Component {
         let signUp = this.state.signUp;
         signUp.error = json.message;
         if (json.success) {
-          // signUp.username = "";
-          // signUp.password = "";
           signUp.email = "";
           this.setState({
             signUp: signUp,
@@ -128,8 +126,8 @@ class LandingPage extends Component {
     let username, password;
     const { signUp, login } = this.state;
 
-    if (signUp.username != null && signUp.username != ""
-      && signUp.password != null && signUp.password != "") {
+    if (signUp.username != null && signUp.username !== ""
+      && signUp.password != null && signUp.password !== "") {
       username = signUp.username;
       password = signUp.password;
     } else {
@@ -154,8 +152,6 @@ class LandingPage extends Component {
         login.error = json.message;
         if (json.success) {
           setInStorage("catify_login", { token: json.token});
-          // login.username = "";
-          // login.password = "";
           this.setState({
             login: login,
             isLoading: false,
@@ -249,7 +245,7 @@ class LandingPage extends Component {
           {
             (login.error) ? (
               <p>{login.error}</p>
-            ) : (null)
+            ) : null
           }
         </div>
         </div>

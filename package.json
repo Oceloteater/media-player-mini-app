@@ -7,7 +7,6 @@
     "type": "git",
     "url": "git+https://github.com/Oceloteater/media-player-mini-app.git"
   },
-  "license": "MIT",
   "private": true,
   "scripts": {
     "start": "webpack -p --progress --profile --colors && node server",
